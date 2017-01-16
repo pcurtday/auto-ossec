@@ -152,42 +152,42 @@ def _pull_ossec_config(hostname):
 
 
     <!-- Default files to be monitored - system32 only. -->
-    <directories check_all="yes">%WINDIR%/win.ini</directories>
-    <directories check_all="yes">%WINDIR%/system.ini</directories>
+    <directories check_all="yes">%WINDIR%\win.ini</directories>
+    <directories check_all="yes">%WINDIR%\system.ini</directories>
     <directories check_all="yes">C:\autoexec.bat</directories>
     <directories check_all="yes">C:\config.sys</directories>
     <directories check_all="yes">C:\boot.ini</directories>
-    <directories check_all="yes">%WINDIR%/System32/CONFIG.NT</directories>
-    <directories check_all="yes">%WINDIR%/System32/AUTOEXEC.NT</directories>
-    <directories check_all="yes">%WINDIR%/System32/at.exe</directories>
-    <directories check_all="yes">%WINDIR%/System32/attrib.exe</directories>
-    <directories check_all="yes">%WINDIR%/System32/cacls.exe</directories>
-    <directories check_all="yes">%WINDIR%/System32/debug.exe</directories>
-    <directories check_all="yes">%WINDIR%/System32/drwatson.exe</directories>
-    <directories check_all="yes">%WINDIR%/System32/drwtsn32.exe</directories>
-    <directories check_all="yes">%WINDIR%/System32/edlin.exe</directories>
-    <directories check_all="yes">%WINDIR%/System32/eventcreate.exe</directories>
-    <directories check_all="yes">%WINDIR%/System32/eventtriggers.exe</directories>
-    <directories check_all="yes">%WINDIR%/System32/ftp.exe</directories>
-    <directories check_all="yes">%WINDIR%/System32/net.exe</directories>
-    <directories check_all="yes">%WINDIR%/System32/net1.exe</directories>
-    <directories check_all="yes">%WINDIR%/System32/netsh.exe</directories>
-    <directories check_all="yes">%WINDIR%/System32/rcp.exe</directories>
-    <directories check_all="yes">%WINDIR%/System32/reg.exe</directories>
-    <directories check_all="yes">%WINDIR%/regedit.exe</directories>
-    <directories check_all="yes">%WINDIR%/System32/regedt32.exe</directories>
-    <directories check_all="yes">%WINDIR%/System32/regsvr32.exe</directories>
-    <directories check_all="yes">%WINDIR%/System32/rexec.exe</directories>
-    <directories check_all="yes">%WINDIR%/System32/rsh.exe</directories>
-    <directories check_all="yes">%WINDIR%/System32/runas.exe</directories>
-    <directories check_all="yes">%WINDIR%/System32/sc.exe</directories>
-    <directories check_all="yes">%WINDIR%/System32/subst.exe</directories>
-    <directories check_all="yes">%WINDIR%/System32/telnet.exe</directories>
-    <directories check_all="yes">%WINDIR%/System32/tftp.exe</directories>
-    <directories check_all="yes">%WINDIR%/System32/tlntsvr.exe</directories>
-    <directories check_all="yes">%WINDIR%/System32/drivers/etc</directories>
-    <directories check_all="yes" realtime="yes">C:\Documents and Settings/All Users/Start Menu/Programs/Startup</directories>
-    <directories check_all="yes" realtime="yes">C:\Users/Public/All Users/Microsoft/Windows/Start Menu/Startup</directories>
+    <directories check_all="yes">%WINDIR%\System32\CONFIG.NT</directories>
+    <directories check_all="yes">%WINDIR%\System32\AUTOEXEC.NT</directories>
+    <directories check_all="yes">%WINDIR%\System32\at.exe</directories>
+    <directories check_all="yes">%WINDIR%\System32\attrib.exe</directories>
+    <directories check_all="yes">%WINDIR%\System32\cacls.exe</directories>
+    <directories check_all="yes">%WINDIR%\System32\debug.exe</directories>
+    <directories check_all="yes">%WINDIR%\System32\drwatson.exe</directories>
+    <directories check_all="yes">%WINDIR%\System32\drwtsn32.exe</directories>
+    <directories check_all="yes">%WINDIR%\System32\edlin.exe</directories>
+    <directories check_all="yes">%WINDIR%\System32\eventcreate.exe</directories>
+    <directories check_all="yes">%WINDIR%\System32\eventtriggers.exe</directories>
+    <directories check_all="yes">%WINDIR%\System32\ftp.exe</directories>
+    <directories check_all="yes">%WINDIR%\System32\net.exe</directories>
+    <directories check_all="yes">%WINDIR%\System32\net1.exe</directories>
+    <directories check_all="yes">%WINDIR%\System32\netsh.exe</directories>
+    <directories check_all="yes">%WINDIR%\System32\rcp.exe</directories>
+    <directories check_all="yes">%WINDIR%\System32\reg.exe</directories>
+    <directories check_all="yes">%WINDIR%\regedit.exe</directories>
+    <directories check_all="yes">%WINDIR%\System32\regedt32.exe</directories>
+    <directories check_all="yes">%WINDIR%\System32\regsvr32.exe</directories>
+    <directories check_all="yes">%WINDIR%\System32\rexec.exe</directories>
+    <directories check_all="yes">%WINDIR%\System32\rsh.exe</directories>
+    <directories check_all="yes">%WINDIR%\System32\runas.exe</directories>
+    <directories check_all="yes">%WINDIR%\System32\sc.exe</directories>
+    <directories check_all="yes">%WINDIR%\System32\subst.exe</directories>
+    <directories check_all="yes">%WINDIR%\System32\telnet.exe</directories>
+    <directories check_all="yes">%WINDIR%\System32\tftp.exe</directories>
+    <directories check_all="yes">%WINDIR%\System32\tlntsvr.exe</directories>
+    <directories check_all="yes">%WINDIR%\System32\drivers\etc</directories>
+    <directories check_all="yes" realtime="yes">C:\Documents and Settings\All Users\Start Menu\Programs\Startup</directories>
+    <directories check_all="yes" realtime="yes">C:\Users\Public\All Users\Microsoft\Windows\Start Menu\Startup</directories>
     <ignore type="sregex">.log$|.htm$|.jpg$|.png$|.chm$|.pnf$|.evtx$</ignore>
 
     <!-- Windows registry entries to monitor. -->
