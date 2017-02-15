@@ -111,8 +111,7 @@ def _download_ossec(url):
 def _pull_ossec_config(hostname):
     ossec_config = (r"""
 <ossec_config>
-
-  <!-- One entry for each file/Event log to monitor. -->
+  <!-- Log analysis -->
   <localfile>
     <location>Application</location>
     <log_format>eventlog</log_format>
@@ -120,7 +119,8 @@ def _pull_ossec_config(hostname):
 
   <localfile>
     <location>Security</location>
-    <log_format>eventlog</log_format>
+    <log_format>eventchannel</log_format>
+    <query>Event\System[EventID != 5145 and EventID != 5156]</query>
   </localfile>
 
   <localfile>
@@ -128,35 +128,58 @@ def _pull_ossec_config(hostname):
     <log_format>eventlog</log_format>
   </localfile>
 
+  <localfile>
+    <location>C:\Program Files (x86)\ossec-agent\active-response\active-responses.log</location>
+    <log_format>syslog</log_format>
+  </localfile>
 
-  <!-- Rootcheck - Policy monitor config -->
+  <!-- Policy monitoring -->
   <rootcheck>
-    <windows_audit>./shared/win_audit_rcl.txt</windows_audit>
-    <windows_apps>./shared/win_applications_rcl.txt</windows_apps>
-    <windows_malware>./shared/win_malware_rcl.txt</windows_malware>
-  </rootcheck>  
+    <disabled>no</disabled>
+    <windows_audit>.\shared\win_audit_rcl.txt</windows_audit>
+    <windows_apps>.\shared\win_applications_rcl.txt</windows_apps>
+    <windows_malware>.\shared\win_malware_rcl.txt</windows_malware>
+  </rootcheck>
 
-
-   <!-- Syscheck - Integrity Checking config. -->
+  <!-- File integrity monitoring -->
   <syscheck>
-  
-    <!-- Default frequency, every 20 hours. It doesn't need to be higher
-      -  on most systems and one a day should be enough.
-      -->
-    <frequency>72000</frequency>
+    <!-- Frequency that syscheck is executed default every 4 hours -->
+    <frequency>14400</frequency>
 
-    <!-- By default it is disabled. In the Install you must choose
-      -  to enable it.
-      -->
-    <disabled>no</disabled>  
+    <!-- By default it is disabled. In the Install you must choose to enable it. -->
+    <disabled>no</disabled>
 
-
-    <!-- Default files to be monitored - system32 only. -->
+    <!-- Default files to be monitored -->
     <directories check_all="yes">%WINDIR%\win.ini</directories>
     <directories check_all="yes">%WINDIR%\system.ini</directories>
     <directories check_all="yes">C:\autoexec.bat</directories>
     <directories check_all="yes">C:\config.sys</directories>
     <directories check_all="yes">C:\boot.ini</directories>
+
+    <directories check_all="yes">%WINDIR%\SysNative\at.exe</directories>
+    <directories check_all="yes">%WINDIR%\SysNative\attrib.exe</directories>
+    <directories check_all="yes">%WINDIR%\SysNative\cacls.exe</directories>
+    <directories check_all="yes">%WINDIR%\SysNative\cmd.exe</directories>
+    <directories check_all="yes" realtime="yes">%WINDIR%\SysNative\drivers\etc</directories>
+    <directories check_all="yes">%WINDIR%\SysNative\eventcreate.exe</directories>
+    <directories check_all="yes">%WINDIR%\SysNative\ftp.exe</directories>
+    <directories check_all="yes">%WINDIR%\SysNative\lsass.exe</directories>
+    <directories check_all="yes">%WINDIR%\SysNative\net.exe</directories>
+    <directories check_all="yes">%WINDIR%\SysNative\net1.exe</directories>
+    <directories check_all="yes">%WINDIR%\SysNative\netsh.exe</directories>
+    <directories check_all="yes">%WINDIR%\SysNative\reg.exe</directories>
+    <directories check_all="yes">%WINDIR%\SysNative\regedt32.exe</directories>
+    <directories check_all="yes">%WINDIR%\SysNative\regsvr32.exe</directories>
+    <directories check_all="yes">%WINDIR%\SysNative\runas.exe</directories>
+    <directories check_all="yes">%WINDIR%\SysNative\sc.exe</directories>
+    <directories check_all="yes">%WINDIR%\SysNative\schtasks.exe</directories>
+    <directories check_all="yes">%WINDIR%\SysNative\sethc.exe</directories>
+    <directories check_all="yes">%WINDIR%\SysNative\subst.exe</directories>
+    <directories check_all="yes">%WINDIR%\SysNative\wbem\WMIC.exe</directories>
+    <directories check_all="yes">%WINDIR%\SysNative\WindowsPowerShell\v1.0\powershell.exe</directories>
+    <directories check_all="yes">%WINDIR%\SysNative\winrm.vbs</directories>
+
+    <!-- - system32 only. -->
     <directories check_all="yes">%WINDIR%\System32\CONFIG.NT</directories>
     <directories check_all="yes">%WINDIR%\System32\AUTOEXEC.NT</directories>
     <directories check_all="yes">%WINDIR%\System32\at.exe</directories>
@@ -185,7 +208,7 @@ def _pull_ossec_config(hostname):
     <directories check_all="yes">%WINDIR%\System32\telnet.exe</directories>
     <directories check_all="yes">%WINDIR%\System32\tftp.exe</directories>
     <directories check_all="yes">%WINDIR%\System32\tlntsvr.exe</directories>
-    <directories check_all="yes">%WINDIR%\System32\drivers\etc</directories>
+    <directories check_all="yes" realtime="yes">%WINDIR%\System32\drivers\etc</directories>
     <directories check_all="yes" realtime="yes">C:\Documents and Settings\All Users\Start Menu\Programs\Startup</directories>
     <directories check_all="yes" realtime="yes">C:\Users\Public\All Users\Microsoft\Windows\Start Menu\Startup</directories>
     <ignore type="sregex">.log$|.htm$|.jpg$|.png$|.chm$|.pnf$|.evtx$</ignore>
@@ -203,9 +226,11 @@ def _pull_ossec_config(hostname):
     <windows_registry>HKEY_LOCAL_MACHINE\Software\Policies</windows_registry>
     <windows_registry>HKEY_LOCAL_MACHINE\Security</windows_registry>
     <windows_registry>HKEY_LOCAL_MACHINE\Software\Microsoft\Internet Explorer</windows_registry>
+
     <windows_registry>HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services</windows_registry>
     <windows_registry>HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\KnownDLLs</windows_registry>
     <windows_registry>HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\SecurePipeServers\winreg</windows_registry>
+
     <windows_registry>HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run</windows_registry>
     <windows_registry>HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\RunOnce</windows_registry>
     <windows_registry>HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\RunOnceEx</windows_registry>
@@ -213,17 +238,18 @@ def _pull_ossec_config(hostname):
     <windows_registry>HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies</windows_registry>
     <windows_registry>HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Windows</windows_registry>
     <windows_registry>HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Winlogon</windows_registry>
-    <windows_registry>HKEY_LOCAL_MACHINE\Software\Microsoft\Active Setup\Installed Components</windows_registry>
 
+    <windows_registry>HKEY_LOCAL_MACHINE\Software\Microsoft\Active Setup\Installed Components</windows_registry>
 
     <!-- Windows registry entries to ignore. -->
     <registry_ignore>HKEY_LOCAL_MACHINE\Security\Policy\Secrets</registry_ignore>
     <registry_ignore>HKEY_LOCAL_MACHINE\Security\SAM\Domains\Account\Users</registry_ignore>
     <registry_ignore type="sregex">\Enum$</registry_ignore>
-  </syscheck>    
+  </syscheck>
 
+  <!-- Active response -->
   <active-response>
-    <disabled>yes</disabled>
+    <disabled>no</disabled>
   </active-response>
 
    <client>
